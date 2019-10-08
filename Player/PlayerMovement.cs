@@ -10,10 +10,13 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D my_rigid_body;
     // "change" How much the player's position is changed
     private Vector3 change;
+    // reference to the animator component
+    private Animator animator;
 
     // Start is called before the first frame update
     void Start(){
-        // Complete the reference to the players rigid body
+        // "GetComponent" Completes the reference to the components
+        animator = GetComponent<Animator>();
         my_rigid_body = GetComponent<Rigidbody2D>();
         
     }
@@ -27,11 +30,23 @@ public class PlayerMovement : MonoBehaviour
             GetAxisRaw: doesnt interpolate between values; snappy movement */
         change.x = Input.GetAxisRaw("Horizontal");
         change.y = Input.GetAxisRaw("Vertical");
+        // Animation Integration
+        UpdateAnimationAndMove();
+    }
+
+    void UpdateAnimationAndMove()
+    {
         // If there is a change, move character.
         if(change != Vector3.zero){
             MoveCharacter();
+            animator.SetFloat("moveX", change.x);
+            animator.SetFloat("moveY", change.y);
+            animator.SetBool("moving", true);
+        }else{
+            animator.SetBool("moving", false);
         }
     }
+
     // Move character from other places beside keyboard.
     void MoveCharacter(){
         // Call player rigid body and set it to move to new position 
