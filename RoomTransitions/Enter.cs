@@ -9,7 +9,7 @@ public class Enter : MonoBehaviour
 
     private void Start()
     {
-        // scenePassword is same as enterPassword
+        // scenePassword is same as enterPassword & allows us to enter new scene
         if (PlayerMovement.instance.scenePassword == enterPassword)
         {
             // entrance position
