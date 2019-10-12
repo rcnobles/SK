@@ -12,6 +12,10 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 change;
     // reference to the animator component
     private Animator animator;
+    // marks know what scene we are in
+    public static PlayerMovement instance;
+    // marks when player leaves for another scene
+    public string scenePassword;
 
     // Start is called before the first frame update
     void Start(){
