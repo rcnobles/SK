@@ -21,9 +21,4 @@ public class Enter : MonoBehaviour
             Debug.Log("Could not Enter Room");
         }
     }
-
-    void Update()
-    {
-        
-    }
 }
