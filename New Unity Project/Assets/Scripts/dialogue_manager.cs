@@ -18,7 +18,7 @@ public class dialogue_manager : MonoBehaviour {
 		sentences = new Queue<string>();
 	}
 
-	public void start_dialogue(Dialogue dialogue) {
+	public void start_dialogue(Dialogue dialogue, Player_InteractionControl player, dialogue_trigger trigger) {
 		sentences.Clear();
 
 		animator.SetBool("is_open", true);
@@ -29,12 +29,13 @@ public class dialogue_manager : MonoBehaviour {
 			sentences.Enqueue(sentence);
 		}
 
-		display_next_sentence();
+		display_next_sentence(player, trigger);
 	}
 
-	public void display_next_sentence() {
+	public void display_next_sentence(Player_InteractionControl player, dialogue_trigger trigger) {
+        Debug.Log("chess");
 		if (sentences.Count == 0) {
-			end_dialogue();
+			end_dialogue(player, trigger);
 			return;
 		}
 
@@ -52,7 +53,10 @@ public class dialogue_manager : MonoBehaviour {
 		}
 	}
 
-	public void end_dialogue() {
+	public void end_dialogue(Player_InteractionControl player, dialogue_trigger trigger) {
 		animator.SetBool("is_open", false);
+        player.movementEnabled = true;
+        player.dialogueActive = false;
+        trigger.FlipConversationStart();
 	}
 }

@@ -15,17 +15,19 @@ public class dialogue_trigger : MonoBehaviour {
         dialogue_script = dialogue_manager.GetComponent<dialogue_manager>();
     }
 
-    void Update() {
-        if (Input.GetKeyDown("space")) {
-            dialogue_script.display_next_sentence();
+    void Interact(Player_InteractionControl player) {
+        if (!has_conversation_started) {
+            dialogue_script.start_dialogue(dialogue, player, this);
+            player.movementEnabled = false;
+            player.dialogueActive = true;
+            has_conversation_started = true;
+        }
+        else {
+            dialogue_script.display_next_sentence(player, this);
         }
     }
 
-    void OnTriggerEnter2D(Collider2D collider) {
-        dialogue_script.start_dialogue(dialogue);
-    }
-
-    void OnTriggerExit2D(Collider2D collider) {
-        dialogue_script.end_dialogue();
+    public void FlipConversationStart() {
+        has_conversation_started = !has_conversation_started;
     }
 }

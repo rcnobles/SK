@@ -15,7 +15,7 @@ public class UI_Description : MonoBehaviour
 
     void Start() {
         origin = transform.localPosition;
-        out_y = -GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect.yMax - GetComponent<RectTransform>().rect.height / 2;
+        out_y = -GetComponentInParent<Canvas>().GetComponent<RectTransform>().rect.yMax - GetComponent<RectTransform>().rect.height;
         transform.localPosition = new Vector3(transform.localPosition.x, out_y, transform.localPosition.z);
         interactionControl = GetComponentInParent<Player_InteractionControl>();
     }

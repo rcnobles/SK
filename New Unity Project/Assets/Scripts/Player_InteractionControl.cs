@@ -60,13 +60,14 @@ public class Player_InteractionControl : MonoBehaviour {
                 useUI.gameObject.SetActive(true);
             }
             else if (dialogueActive) {
-
+                currentObject.SendMessage("Interact", this);
             }
             else if (useActive) {
                 if (useChoice) {
                     inventory[currentItem].GetComponent<Object_PickupItem>().Use();
                     useActive = false;
                     inventoryActive = false;
+                    movementEnabled = true;
                     useUI.gameObject.SetActive(false);
                     inventoryUI.GetComponent<UI_Inventory>().ResetPosition();
                     descriptionUI.GetComponent<UI_Description>().ResetPosition();
