@@ -52,7 +52,7 @@ public class dialogue_manager : MonoBehaviour {
 		}
 	}
 
-	void end_dialogue() {
+	public void end_dialogue() {
 		animator.SetBool("is_open", false);
 	}
 }
