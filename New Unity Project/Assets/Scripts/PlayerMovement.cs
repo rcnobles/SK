@@ -16,12 +16,15 @@ public class PlayerMovement : MonoBehaviour
     public static PlayerMovement instance;
     // marks when player leaves for another scene
     public string scenePassword;
+    // controls whether player can move or not
+    private Player_InteractionControl interactionControl;
 
     // Start is called before the first frame update
     void Start(){
         // "GetComponent" Completes the reference to the components
         animator = GetComponent<Animator>();
         my_rigid_body = GetComponent<Rigidbody2D>();
+        interactionControl = GetComponent<Player_InteractionControl>();
         
     }
 
@@ -32,8 +35,10 @@ public class PlayerMovement : MonoBehaviour
         /* If the player is pushing any buttons: up, down, left, right, WASD
             Add to that change and move the character depending on the change.
             GetAxisRaw: doesnt interpolate between values; snappy movement */
-        change.x = Input.GetAxisRaw("Horizontal");
-        change.y = Input.GetAxisRaw("Vertical");
+        if (interactionControl.movementEnabled) {
+            change.x = Input.GetAxisRaw("Horizontal");
+            change.y = Input.GetAxisRaw("Vertical");
+        }
         // Animation Integration
         UpdateAnimationAndMove();
     }
