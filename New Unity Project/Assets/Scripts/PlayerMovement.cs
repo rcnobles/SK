@@ -58,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
 
     // Move character from other places beside keyboard.
     void MoveCharacter(){
+        // Reduce the speed of diagonal walking (vector addition)
+        change.Normalize();
         // Call player rigid body and set it to move to new position 
         my_rigid_body.MovePosition(
             transform.position + change * speed * Time.deltaTime
