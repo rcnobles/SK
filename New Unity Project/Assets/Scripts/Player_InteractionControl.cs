@@ -88,7 +88,8 @@ public class Player_InteractionControl : MonoBehaviour {
                 transform.GetChild(0).GetChild(1).GetChild(5).transform.localPosition = transform.GetChild(0).GetChild(1).GetChild(0).transform.localPosition;
                 if (itemCount != 0) {
                     Debug.Log(inventory[0].GetComponent<Object_PickupItem>().itemName);
-                    descriptionUI.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().SetText(inventory[0].GetComponent<Object_PickupItem>().itemName + System.Environment.NewLine + inventory[0].GetComponent<Object_PickupItem>().itemDescription);
+                    descriptionUI.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().SetText(inventory[0].GetComponent<Object_PickupItem>().itemName);
+                    descriptionUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().SetText(inventory[0].GetComponent<Object_PickupItem>().itemDescription);
                 }
             }
             else {
@@ -112,7 +113,8 @@ public class Player_InteractionControl : MonoBehaviour {
                 else
                     currentItem = itemCount - 1;
                 transform.GetChild(0).GetChild(1).GetChild(5).transform.localPosition = transform.GetChild(0).GetChild(1).GetChild(currentItem).transform.localPosition;
-                descriptionUI.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().SetText(inventory[currentItem].GetComponent<Object_PickupItem>().itemName + System.Environment.NewLine + inventory[currentItem].GetComponent<Object_PickupItem>().itemDescription);
+                descriptionUI.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().SetText(inventory[currentItem].GetComponent<Object_PickupItem>().itemName);
+                descriptionUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().SetText(inventory[currentItem].GetComponent<Object_PickupItem>().itemDescription);
             }
             else {
                 if (useChoice) {
