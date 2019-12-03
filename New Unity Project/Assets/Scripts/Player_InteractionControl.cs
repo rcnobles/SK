@@ -134,6 +134,9 @@ public class Player_InteractionControl : MonoBehaviour {
 		if(other.CompareTag("InteractableObject")){
 			currentObject = other.gameObject;
 		}
+        else if (other.CompareTag("Warp")) {
+            transform.SetPositionAndRotation(new Vector3(other.transform.position.x, transform.position.y, 0), other.transform.rotation);
+        }
 	}
 
 	void OnTriggerExit2D(Collider2D other){
