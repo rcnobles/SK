@@ -7,6 +7,9 @@ public class Player_InteractionControl : MonoBehaviour {
     // current interactable object;
 	public GameObject currentObject = null;
 
+    // NPC followers
+    public GameObject follower;
+
     // player inventory
 	public GameObject[] inventory = new GameObject[5];
 	private int itemCount = 0;
@@ -136,7 +139,9 @@ public class Player_InteractionControl : MonoBehaviour {
 			currentObject = other.gameObject;
 		}
         else if (other.CompareTag("Warp")) {
+            Vector3 temp = transform.InverseTransformPoint(follower.transform.position);
             transform.SetPositionAndRotation(new Vector3(other.transform.position.x, transform.position.y, 0), other.transform.rotation);
+            follower.transform.position = transform.TransformPoint(temp);
         }
 	}
 

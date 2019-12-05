@@ -44,21 +44,24 @@ public class bear : MonoBehaviour{
                 changeAnim(temp - transform.position);
                 myRigidbody.MovePosition(temp);
                 ChangeState(FollowerState.walk);
-                anim.SetBool("wakeUp", true);
             }
-        }else if (Vector3.Distance(target.position,
-                            transform.position) > outerChaseRadius){
-            anim.SetBool("wakeUp", false);
-        } 
-
+        }
+        else {
+            anim.SetBool("moving", false);
+            anim.SetFloat("moveX", 0);
+            anim.SetFloat("moveY", 0);
+        }
     }
 
     private void SetAnimFloat(Vector2 setVector){
         anim.SetFloat("moveX", setVector.x);
         anim.SetFloat("moveY", setVector.y);
+        Debug.Log("x " + setVector.x);
+        Debug.Log("y " + setVector.y);
     }
     private void changeAnim(Vector2 direction){
         if (Mathf.Abs(direction.x) > Mathf.Abs(direction.y)){
+            anim.SetBool("moving", true);
             if (direction.x > 0){
                 // Right
                 SetAnimFloat(Vector2.right);
@@ -67,10 +70,11 @@ public class bear : MonoBehaviour{
                 SetAnimFloat(Vector2.left);
             }
         }else if (Mathf.Abs(direction.x) < Mathf.Abs(direction.y)){
-            if (direction.x > 0){
+            anim.SetBool("moving", true);
+            if (direction.y > 0){
                 // Up
                 SetAnimFloat(Vector2.up);
-            }else if (direction.x < 0){
+            }else if (direction.y < 0){
                 // Down
                 SetAnimFloat(Vector2.down);
             }

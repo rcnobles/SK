@@ -45,6 +45,8 @@ public class Object_PickupItem : dialogue_trigger{
                     player.RemoveInventory();
                     player.useActive = false;
                     player.movementEnabled = true;
+                    valid_object.GetComponent<Object_NPC>().reaction = true;
+                    valid_object.SendMessage("Interact", player);
                 }
             }
         }
