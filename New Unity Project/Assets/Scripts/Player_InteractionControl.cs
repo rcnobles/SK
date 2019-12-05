@@ -59,15 +59,16 @@ public class Player_InteractionControl : MonoBehaviour {
                 useActive = true;
                 useUI.gameObject.SetActive(true);
             }
-            else if (dialogueActive) {
+            else if (dialogueActive && !useActive) {
                 currentObject.SendMessage("Interact", this);
             }
             else if (useActive) {
-                if (useChoice) {
-                    inventory[currentItem].GetComponent<Object_PickupItem>().Use();
-                    useActive = false;
+                if (dialogueActive) {
+                    inventory[currentItem].GetComponent<Object_PickupItem>().Use(this, currentObject);
+                }
+                else if (useChoice) {
+                    inventory[currentItem].GetComponent<Object_PickupItem>().Use(this, currentObject);
                     inventoryActive = false;
-                    movementEnabled = true;
                     useUI.gameObject.SetActive(false);
                     inventoryUI.GetComponent<UI_Inventory>().ResetPosition();
                     descriptionUI.GetComponent<UI_Description>().ResetPosition();
@@ -160,4 +161,33 @@ public class Player_InteractionControl : MonoBehaviour {
 
         Debug.Log ("r");
 	}
+
+    public void RemoveInventory() {
+        inventory[currentItem] = null;
+        for(int i = currentItem; i < itemCount - 1; i++) {
+            inventory[i] = inventory[i + 1];
+        }
+
+        itemCount--;
+
+        Image[] inventoryImages = transform.GetChild(0).GetChild(1).GetComponentsInChildren<Image>();
+
+        for (int i = 1; i <= 5; i++) {
+            inventoryImages[i].enabled = false;
+            if (i - 1 < itemCount) {
+                inventoryImages[i].enabled = true;
+                inventoryImages[i].sprite = inventory[i - 1].GetComponent<SpriteRenderer>().sprite;
+            }
+        }
+
+
+        Debug.Log(itemCount);
+
+        if (itemCount == 0) {
+            Debug.Log(itemCount + "Check");
+            inventoryImages[6].enabled = false;
+            descriptionUI.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().SetText("");
+            descriptionUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().SetText("");
+        }
+    }
 }
