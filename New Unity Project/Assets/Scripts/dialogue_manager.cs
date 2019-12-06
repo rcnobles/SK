@@ -13,11 +13,13 @@ public class dialogue_manager : MonoBehaviour {
 	public Queue<string> sentences;
     private bool sentence_done;
     private string current_sentence;
+    private AudioSource audioSource;
 
 
 	// Use this for initialization
 	void Start () {
 		sentences = new Queue<string>();
+        audioSource = GetComponent<AudioSource>();
 	}
 
 	public void start_dialogue(Dialogue dialogue, Player_InteractionControl player, dialogue_trigger trigger) {
@@ -57,6 +59,8 @@ public class dialogue_manager : MonoBehaviour {
     IEnumerator type_sentence (string sentence) {
 		dialogue_text.text = "";
 		foreach (char letter in sentence.ToCharArray()) {
+            if(Time.frameCount % 2 == 0)
+                audioSource.Play();
 			dialogue_text.text += letter;
 			yield return null;
 		}

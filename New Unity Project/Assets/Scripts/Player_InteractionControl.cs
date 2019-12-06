@@ -53,6 +53,16 @@ public class Player_InteractionControl : MonoBehaviour {
     }
 
 	void Update(){
+        if(follower.GetComponent<bear>().currentState == FollowerState.walk) {
+            if(transform.position.y > follower.transform.position.y) {
+                GetComponent<SpriteRenderer>().sortingOrder = 0;
+                follower.GetComponent<SpriteRenderer>().sortingOrder = 1;
+            }
+            else {
+                GetComponent<SpriteRenderer>().sortingOrder = 1;
+                follower.GetComponent<SpriteRenderer>().sortingOrder = 0;
+            }
+        }
         if (Input.GetButtonDown("Interact")) {
             if (currentObject && movementEnabled) {
                 currentObject.SendMessage("Interact", this);
@@ -141,7 +151,9 @@ public class Player_InteractionControl : MonoBehaviour {
         else if (other.CompareTag("Warp")) {
             Vector3 temp = transform.InverseTransformPoint(follower.transform.position);
             transform.SetPositionAndRotation(new Vector3(other.transform.position.x, transform.position.y, 0), other.transform.rotation);
-            follower.transform.position = transform.TransformPoint(temp);
+            if (follower.GetComponent<bear>().currentState == FollowerState.walk) {
+                follower.transform.position = transform.TransformPoint(temp);
+            }
         }
 	}
 

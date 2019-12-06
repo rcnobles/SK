@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -39,8 +40,9 @@ public class bear : MonoBehaviour{
         if (Vector3.Distance(target.position,
                             transform.position) <= outerChaseRadius
             && Vector3.Distance(target.position,transform.position) > innerChaseRadius){
+            currentState = FollowerState.walk;
             if (currentState == FollowerState.idle || currentState == FollowerState.walk ){
-                Vector3 temp = Vector3.MoveTowards(transform.position, target.position, moveSpeed * Time.deltaTime);
+                Vector3 temp = Vector3.MoveTowards(transform.position, target.position, Math.Min(Vector3.Distance(target.position, transform.position) * Time.deltaTime * 2, moveSpeed * Time.deltaTime * 2));
                 changeAnim(temp - transform.position);
                 myRigidbody.MovePosition(temp);
                 ChangeState(FollowerState.walk);
